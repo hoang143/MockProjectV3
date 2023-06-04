@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+    <data>
+        <variable
+            name="movie"
+            type="com.example.mockprojectv3.model.MovieModel" />
+    </data>
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="wrap_content"
+        android:layout_marginVertical="@dimen/height_10"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        app:cardCornerRadius="8dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/black"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="15dp"
+                >
+                <ImageView
+                    android:id="@+id/ivMovie"
+                    android:layout_width="166dp"
+                    android:layout_height="230dp"
+                    android:src="@drawable/profile_test"
+                    android:scaleType="centerCrop"
+                    />
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:padding="5dp"
+                android:layout_width="166dp"
+                android:layout_height="wrap_content"
+                android:text="Popular"
+                android:ellipsize="end"
+                android:textColor="@color/white"
+                android:textSize="15dp"
+                android:maxLines="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'androidx.navigation.safeargs'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -35,6 +36,7 @@ android {
 
     buildFeatures{
         dataBinding true
+        viewBinding true
     }
 }
 
@@ -58,8 +60,13 @@ dependencies {
     implementation "androidx.cardview:cardview:1.0.0"
 
     // Retrofit
+    implementation 'com.google.code.gson:gson:2.9.0'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
+    //Okhttp
+    implementation 'com.squareup.okhttp3:okhttp:3.14.9'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.6.0'
 
     def lifecycle_version = "2.2.0"
     // View Model
@@ -71,6 +78,34 @@ dependencies {
     // Glide Library
     implementation 'com.github.bumptech.glide:glide:4.13.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.13.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.13.0'
+
+    //RX java
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.2'
+    implementation 'io.reactivex.rxjava3:rxjava:3.1.5'
+    implementation 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
+    implementation 'androidx.room:room-rxjava3:2.5.1'
+
+    // Firebase: when using Firebase BoM, no need for version number
+    implementation platform('com.google.firebase:firebase-bom:29.2.1')
+    implementation 'com.google.firebase:firebase-analytics'
+
+    // Fire store:
+    implementation 'com.google.firebase:firebase-firestore'
+
+    // Authentication
+    implementation 'com.google.firebase:firebase-auth'
+
+    // Storage
+    implementation 'com.google.firebase:firebase-storage'
+
+    //Circle Image
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    // Room database
+    def room_version = "2.5.1"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
 }
 
 configurations.implementation {

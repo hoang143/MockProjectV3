@@ -1,16 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context=".ui.main.FavouriteFragment">
+<layout>
+    <data>
+        <variable
+            name="FireStoreViewModel"
+            type="com.example.mockprojectv3.viewmodel.FireStoreViewModel" />
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textSize="40dp"
-        android:text="Favourite Fragment" />
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:background="@color/black"
+        android:padding="20dp"
+        tools:context=".ui.main.FavouriteFragment">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- TODO: Update blank fragment layout -->
+        <ImageView
+            android:id="@+id/ivFavourite"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/favourite"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/tvFavourite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/ivFavourite"
+            app:layout_constraintStart_toEndOf="@+id/ivFavourite"
+            android:layout_marginHorizontal="10dp"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:text="My Favourite Movie" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcFavourite"
+            app:layout_constraintTop_toBottomOf="@+id/tvFavourite"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="-15dp"
+            android:layout_marginTop="@dimen/margin_top_40"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+

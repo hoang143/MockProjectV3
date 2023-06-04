@@ -1,14 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black"
     tools:context=".ui.main.MovieDetailFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ImageView
+        android:id="@+id/ivPoster_MovieDetails"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:scaleType="centerCrop"
+        android:src="@drawable/profile_test"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/gradient"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_20">
+            <LinearLayout
+                android:layout_marginTop="@dimen/margin_top_500"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <RatingBar
+                    android:outlineSpotShadowColor="@color/white"
+                    android:id="@+id/ratingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:numStars="5"
+                    />
+                <TextView
+                    android:layout_gravity="center"
+                    android:id="@+id/tvReleaseDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_22"
+                    android:textColor="@color/white"
+                    android:text="22-12-2023"
+                    />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvTitle_MovieDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/test_thor_love_and_thunder"
+                android:ellipsize="end"
+                android:textSize="@dimen/text_30"
+                android:textColor="@color/white"
+                />
+            <TextView
+                android:id="@+id/tvOverView_MovieDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="clip_horizontal"
+                android:textSize="@dimen/text_16"
+                android:text="Over view"
+                android:justificationMode="inter_word"
+                android:textColor="@color/white"
+                />
+        </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tvAddToFavourite"
+        android:layout_width="@dimen/height_250"
+        android:layout_height="@dimen/height_50"
+        android:background="@drawable/custom_button"
+        android:gravity="center"
+        android:text="@string/add_to_favourite"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_login"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="@dimen/margin_top_40"/>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

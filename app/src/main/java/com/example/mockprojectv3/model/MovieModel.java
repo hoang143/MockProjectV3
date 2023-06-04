@@ -10,6 +10,7 @@ public class MovieModel implements Parcelable {
     private String title;
     private String poster_path;
     private String release_date;
+    @SerializedName("id")
     private int movie_id;
     private float vote_average;
     @SerializedName("overview")
@@ -55,6 +56,13 @@ public class MovieModel implements Parcelable {
             return new MovieModel[size];
         }
     };
+
+    public MovieModel() {
+
+    }
+    public MovieModel(String title) {
+        this.title = title;
+    }
     // Getters
     public String getTitle() {
         return title;
@@ -115,5 +123,9 @@ public class MovieModel implements Parcelable {
                 ", movie_overview='" + movie_overview + '\'' +
                 ", original_language='" + original_language + '\'' +
                 '}';
+    }
+
+    public boolean isTrending() {
+        return true;
     }
 }

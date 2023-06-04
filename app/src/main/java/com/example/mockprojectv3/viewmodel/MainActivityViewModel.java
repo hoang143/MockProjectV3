@@ -11,16 +11,4 @@ import java.util.List;
 
 public class MainActivityViewModel extends ViewModel {
 
-    private MovieRepository movieRepository;
-
-    public MainActivityViewModel(){
-        movieRepository = MovieRepository.getInstance();
-    }
-    public LiveData<List<MovieModel>> getMovies(){
-        return movieRepository.getMovies();
-    }
-
-    public void searchMovieApi(String query, int pageNumber){
-        movieRepository.searchMovieApi(query, pageNumber);
-    }
 }

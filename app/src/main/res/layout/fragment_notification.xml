@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
-
     <data>
-        <variable
-            name="ProfileViewModel1"
-            type="com.example.mockprojectv3.viewmodel.ProfileViewModel" />
-
         <variable
             name="FragmentNotificationViewModel"
             type="com.example.mockprojectv3.viewmodel.NotificationViewModel" />
@@ -45,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Button"
-            android:onClick="@{()-> FragmentNotificationViewModel.ShowLogMessage4(ProfileViewModel1)}"
+            android:onClick="@{()-> FragmentNotificationViewModel.ShowLogMessage()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/ivNotification"
             />

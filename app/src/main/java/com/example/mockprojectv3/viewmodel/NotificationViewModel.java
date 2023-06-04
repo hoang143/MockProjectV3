@@ -3,7 +3,9 @@ package com.example.mockprojectv3.viewmodel;
 import android.util.Log;
 import android.view.View;
 
-public class NotificationViewModel {
+import androidx.lifecycle.ViewModel;
+
+public class NotificationViewModel extends ViewModel{
     private String notification;
 
     public NotificationViewModel(String notification) {

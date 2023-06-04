@@ -1,16 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/teal_200"
-    tools:context=".ui.main.LoginFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+<layout>
+
+    <data>
+        <variable
+            name="UserViewModel"
+            type="com.example.mockprojectv3.viewmodel.UserViewModel" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textColor="@color/white"
-        android:text="Login Fragment" />
+        android:background="@color/black"
+        android:padding="@dimen/padding_40"
+        android:orientation="vertical"
+        tools:context=".ui.main.LoginFragment">
 
-</FrameLayout>
+        <ImageView
+            android:layout_marginTop="@dimen/margin_top_20"
+            android:id="@+id/imageView"
+            android:layout_width="@dimen/height_90"
+            android:layout_height="@dimen/height_90"
+            android:src="@drawable/icon_play" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/welcome_back_login"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_35"
+            android:layout_marginTop="40dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv"
+            android:layout_marginTop="@dimen/margin_top_20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sign_in"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_20" />
+
+        <EditText
+            android:id="@+id/etUserNameLogin"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_60"
+            android:hint="@string/common_gmail"
+            android:background="@drawable/custom_edittext"
+            android:layout_marginTop="@dimen/margin_top_80"
+            android:imeOptions="actionNext"
+            android:maxLength="100"
+            android:maxLines="1"
+            android:padding="@dimen/padding_10"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textSize="@dimen/text_18"
+            android:autofillHints="emailAddress" />
+
+        <EditText
+            android:id="@+id/etPasswordLogin"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/margin_top_15"
+            android:background="@drawable/custom_edittext"
+            android:layout_height="@dimen/height_60"
+            android:drawableRight="@drawable/eyeslash_white"
+            android:hint="@string/common_password"
+            android:imeOptions="actionDone"
+            android:inputType="textPassword"
+            android:padding="@dimen/padding_10"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textSize="@dimen/text_18" />
+
+        <TextView
+            android:id="@+id/tvLogin"
+            android:layout_marginTop="@dimen/margin_top_40"
+            android:layout_width="match_parent"
+            android:background="@drawable/custom_button"
+            android:layout_height="@dimen/height_50"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:text="@string/common_login"
+            android:textSize="@dimen/text_login"
+            />
+        <TextView
+            android:layout_marginTop="@dimen/margin_top_20"
+            android:id="@+id/tvSignUp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Sign_up"
+            android:textSize="@dimen/text_16"
+            android:textColor="@color/white"
+            />
+
+    </LinearLayout>
+</layout>
+
+

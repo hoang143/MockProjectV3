@@ -2,4 +2,26 @@
     <string name="app_name">MockProjectV3</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="top_rate">Top Rate</string>
+    <string name="popular">Popular</string>
+    <string name="categories">Categories</string>
+    <string name="welcome">Let\'s relax and watch a movie !</string>
+    <string name="common_login">LOG ME IN</string>
+    <string name="common_password">Password</string>
+    <string name="common_gmail">Gmail</string>
+    <string name="common_username">Username</string>
+    <string name="welcome_back_login">Welcome Back,</string>
+    <string name="sign_in">Sign In to continue watching.</string>
+    <string name="Sign_up">New User? Sign up</string>
+    <string name="welcome_to_muvic">Welcome to Muvic</string>
+    <string name="sign_up_to_watch">Sign up to watch movie</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="already_have_an_account">Already have an account? Log In.</string>
+    <string name="sign_up_tv">Sign up</string>
+    <string name="search_movie">Search movie...</string>
+    <string name="user_name">User Name</string>
+    <string name="update_profile">Update Profile</string>
+    <string name="sign_out">Sign out</string>
+    <string name="add_to_favourite">Add to Favourite</string>
+    <string name="test_thor_love_and_thunder">Thor: Love and Thunder</string>
 </resources>

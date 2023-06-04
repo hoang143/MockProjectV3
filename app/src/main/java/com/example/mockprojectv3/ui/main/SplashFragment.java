@@ -1,55 +1,67 @@
 package com.example.mockprojectv3.ui.main;
 
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
-
-import android.os.Handler;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.mockprojectv3.R;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.example.mockprojectv3.databinding.FragmentSplashBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class SplashFragment extends Fragment {
-    private SplashViewModel mViewModel;
+    private static final long DELAY_TIME = 2000; // 2 giây
+    private FragmentSplashBinding binding;
 
-    public static SplashFragment newInstance() {
-        return new SplashFragment();
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = FragmentSplashBinding.inflate(inflater, container, false);
+        binding.setLifecycleOwner(this);
+
+        return binding.getRoot();
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_splash, container, false);
-    }
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(SplashViewModel.class);
+        ImageView imageView = binding.ivSplash;
+        Animation animation = AnimationUtils.loadAnimation(requireContext(), R.anim.zoom);
+        imageView.startAnimation(animation);
 
-        // TODO: Use the ViewModel
-
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
-                Navigation.findNavController(getView()).navigate(SplashFragmentDirections.splash2login());
-//                return null;
+                navigateToNextFragment();
+//                navigateTo(new HomeFragment());
             }
-        }, 1000);
+        }, DELAY_TIME);
+    }
+
+    private void navigateToNextFragment() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+       if(user == null){
+           navigateTo(new LoginFragment());
+       }else {
+           navigateTo(HomeFragment.getInstance());
+       }
+    }
+
+    private void navigateTo(Fragment fragment){
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.containerFragment, fragment)
+                .commit();
     }
 }

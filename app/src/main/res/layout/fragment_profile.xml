@@ -1,26 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
-
     <data>
-
         <variable
-            name="ProfileViewModel"
-            type="com.example.mockprojectv3.viewmodel.ProfileViewModel" />
+            name="UserViewModel"
+            type="com.example.mockprojectv3.viewmodel.UserViewModel" />
 
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
+        android:padding="@dimen/padding_30"
+        android:background="@color/black"
         tools:context=".ui.main.ProfileFragment">
 
         <!-- TODO: Update blank fragment layout -->
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="40dp"
-            android:text="@{ProfileViewModel.userName}" />
+            android:orientation="vertical"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <ImageView
+                    android:layout_width="@dimen/height_40"
+                    android:layout_height="@dimen/height_40"
+                    android:src="@drawable/profile"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_top_20"
+                    android:layout_height="wrap_content"
+                    android:text="Profile"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_35"
+                    android:textStyle="bold"
+                    />
+            </LinearLayout>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_avatar"
+                android:layout_width="@dimen/height_150"
+                android:layout_height="@dimen/height_150"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/profile_test"
+                />
+            <TextView
+                android:id="@+id/tv_username"
+                android:layout_marginTop="@dimen/margin_top_15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_30"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/tv_mail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_20" />
+
+            <TextView
+                android:layout_marginTop="@dimen/margin_top_50"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Type to change your profile"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="@dimen/text_25"
+                />
+            <EditText
+                android:id="@+id/etUserNameSignUp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_60"
+                android:hint="@string/user_name"
+                android:background="@drawable/custom_edittext"
+                android:layout_marginTop="@dimen/margin_top_15"
+                android:imeOptions="actionNext"
+                android:maxLength="100"
+                android:maxLines="1"
+                android:padding="@dimen/padding_10"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="@dimen/text_18"
+                android:autofillHints="emailAddress" />
+
+            <TextView
+                android:id="@+id/tvUpdateProfile"
+                android:layout_marginTop="@dimen/margin_top_15"
+                android:layout_width="match_parent"
+                android:background="@drawable/custom_button"
+                android:layout_height="@dimen/height_50"
+                android:layout_gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:text="@string/update_profile"
+                android:textSize="@dimen/text_login"
+                />
+
+            <TextView
+                android:id="@+id/tvSignOut_profilefragment"
+                android:layout_marginTop="@dimen/margin_top_15"
+                android:layout_width="match_parent"
+                android:background="@drawable/custom_button_home"
+                android:layout_height="@dimen/height_50"
+                android:layout_gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:text="@string/sign_out"
+                android:textSize="@dimen/text_login"
+                />
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

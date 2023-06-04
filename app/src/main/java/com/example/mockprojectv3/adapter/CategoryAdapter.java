@@ -50,11 +50,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     }
 
     public class CategoryViewHolder extends RecyclerView.ViewHolder{
-        private Button btnCat;
+        private TextView btnCat;
 
         public CategoryViewHolder(@NonNull View itemView ){
             super(itemView);
-            btnCat = itemView.findViewById(R.id.btn_category);
+            btnCat = itemView.findViewById(R.id.tvCategory);
         }
     }
 }

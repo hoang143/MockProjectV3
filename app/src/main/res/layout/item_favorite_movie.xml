@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="FireStoreViewModel"
+            type="com.example.mockprojectv3.viewmodel.FireStoreViewModel" />
+
+    </data>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:background="@color/custom"
+        android:layout_marginTop="@dimen/height_10"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/ivPoster_favourite_movie"
+            android:layout_width="@dimen/height_90"
+            android:layout_height="@dimen/height_90"
+            android:src="@drawable/profile"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:id="@+id/tv_title_favourite_movie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_20"
+                />
+
+            <TextView
+                android:id="@+id/tv_over_view_favourite_movie"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/common_username"
+                android:layout_marginRight="@dimen/margin_top_10"
+                android:justificationMode="inter_word"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_12"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

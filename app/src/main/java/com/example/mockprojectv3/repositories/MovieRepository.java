@@ -1,41 +1,30 @@
 package com.example.mockprojectv3.repositories;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-
 import com.example.mockprojectv3.model.MovieModel;
-import com.example.mockprojectv3.request.MovieApiClient;
+import com.example.mockprojectv3.viewmodel.SingleLiveEvent;
 
 import java.util.List;
 
-public class MovieRepository {
-    private static MovieRepository instance;
+import io.reactivex.rxjava3.core.Observable;
 
-    private MovieApiClient movieApiClient;
+public interface MovieRepository {
+    SingleLiveEvent<Resource<List<MovieModel>>> getSearchMovies();
 
+    SingleLiveEvent<Resource<List<MovieModel>>> getPopularMovies();
 
+    SingleLiveEvent<Resource<List<MovieModel>>> getTrendingMovies();
 
+    SingleLiveEvent<Resource<MovieModel>> getMovieByID();
 
-    public static MovieRepository getInstance(){
-        if(instance == null){
-            instance = new MovieRepository();
-        }
-        return instance;
-    }
-    private MovieRepository(){
-        movieApiClient = new MovieApiClient().getInstance();
-    }
+    void getMovieByID(int movieID);
 
-    public MovieApiClient getMovieApiClient() {
-        return movieApiClient;
-    }
+    void loadMoviesApi(int pageNumber);
 
-    public LiveData<List<MovieModel>> getMovies(){
-        return movieApiClient.getMovies() ;
-    }
-//------------------------------------------2----------------------------------------
-    public void searchMovieApi(String query, int pageMuber){
-        movieApiClient.searchMoviesApi(query, pageMuber);
-    }
+    void searchMovies(String query, int pageNumber);
+
+    void searchNextPage();
+
+    void loadNextPage();
 
 }
