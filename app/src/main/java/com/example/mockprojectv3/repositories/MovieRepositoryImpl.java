@@ -9,6 +9,7 @@ import com.example.mockprojectv3.model.MovieModel;
 import com.example.mockprojectv3.request.ApiService;
 import com.example.mockprojectv3.response.MovieSearchResponse;
 import com.example.mockprojectv3.utils.Credentials;
+import com.example.mockprojectv3.viewmodel.SingleLiveEvent;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,10 +33,10 @@ public class MovieRepositoryImpl implements MovieRepository {
         }
         return instance;
     }
-    private final MutableLiveData<Resource<List<MovieModel>>> mSearchMovies;
-    private final MutableLiveData<Resource<List<MovieModel>>> mTrendingMovies;
-    private final MutableLiveData<Resource<List<MovieModel>>> mPopularMovies;
-    private final MutableLiveData<Resource<MovieModel>> mMovieByID;
+    private final SingleLiveEvent<Resource<List<MovieModel>>> mSearchMovies;
+    private final SingleLiveEvent<Resource<List<MovieModel>>> mTrendingMovies;
+    private final SingleLiveEvent<Resource<List<MovieModel>>> mPopularMovies;
+    private final SingleLiveEvent<Resource<MovieModel>> mMovieByID;
     private final List<MovieModel> currentSearchResults;
     private final List<MovieModel> currentPopular;
     private final List<MovieModel> currentTrending;
@@ -47,32 +48,32 @@ public class MovieRepositoryImpl implements MovieRepository {
     private RetrieveMovies retrieveMovies;
 
     public MovieRepositoryImpl() {
-        mSearchMovies = new MutableLiveData<>();
-        mTrendingMovies = new MutableLiveData<>();
-        mPopularMovies = new MutableLiveData<>();
+        mSearchMovies = new SingleLiveEvent<>();
+        mTrendingMovies = new SingleLiveEvent<>();
+        mPopularMovies = new SingleLiveEvent<>();
         currentSearchResults = new ArrayList<>();
-        mMovieByID = new MutableLiveData<>();
+        mMovieByID = new SingleLiveEvent<>();
         currentPopular = new ArrayList<>();
         currentTrending = new ArrayList<>();
         compositeDisposable = new CompositeDisposable();
     }
     @Override
-    public LiveData<Resource<MovieModel>> getMovieByID() {
+    public SingleLiveEvent<Resource<MovieModel>> getMovieByID() {
         return mMovieByID;
     }
 
     @Override
-    public LiveData<Resource<List<MovieModel>>> getSearchMovies() {
+    public SingleLiveEvent<Resource<List<MovieModel>>> getSearchMovies() {
         return mSearchMovies;
     }
 
     @Override
-    public LiveData<Resource<List<MovieModel>>> getPopularMovies() {
+    public SingleLiveEvent<Resource<List<MovieModel>>> getPopularMovies() {
         return mPopularMovies;
     }
 
     @Override
-    public LiveData<Resource<List<MovieModel>>> getTrendingMovies() {
+    public SingleLiveEvent<Resource<List<MovieModel>>> getTrendingMovies() {
         return mTrendingMovies;
     }
 
@@ -92,10 +93,10 @@ public class MovieRepositoryImpl implements MovieRepository {
                                     if (response.isSuccessful()) {
                                         movie = response.body();
                                     }
-                                    mMovieByID.postValue(Resource.success(movie));
+                                    mMovieByID.setValue(Resource.success(movie));
                                 }, throwable -> {
                                     String errorMessage = throwable.getMessage();
-                                    mMovieByID.postValue(Resource.error(errorMessage));
+                                    mMovieByID.setValue(Resource.error(errorMessage));
                                 }
                         )
         );

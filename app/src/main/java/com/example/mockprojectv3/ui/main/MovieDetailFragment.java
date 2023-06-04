@@ -27,6 +27,7 @@ import com.example.mockprojectv3.repositories.Resource;
 import com.example.mockprojectv3.utils.Credentials;
 import com.example.mockprojectv3.viewmodel.FireStoreViewModel;
 import com.example.mockprojectv3.viewmodel.FireStoreViewModelFactory;
+import com.example.mockprojectv3.viewmodel.HomeViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -40,6 +41,7 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class MovieDetailFragment extends Fragment {
+    HomeViewModel homeViewModel;
     private static MovieDetailFragment instance;
 
     public static MovieDetailFragment getInstance() {
@@ -68,6 +70,7 @@ public class MovieDetailFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Khởi tạo ViewModel
+        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         FireStoreRepository fireStoreRepository = FireStoreRepositoryImpl.getInstance();
         FireStoreViewModelFactory viewModelFactory = new FireStoreViewModelFactory(fireStoreRepository);
         fireStoreViewModel = new ViewModelProvider(this, viewModelFactory).get(FireStoreViewModel.class);

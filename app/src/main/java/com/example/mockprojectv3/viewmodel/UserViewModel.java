@@ -58,4 +58,10 @@ public class UserViewModel extends ViewModel {
                 .replace(R.id.containerFragment, fragment)
                 .commit();
     }
+    public void navigateToAndAdd(FragmentManager fragmentManager, Fragment fragment) {
+        fragmentManager.beginTransaction()
+                .replace(R.id.containerFragment, fragment)
+                .addToBackStack(null)
+                .commit();
+    }
 }

@@ -7,6 +7,8 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -23,17 +25,22 @@ import com.example.mockprojectv3.ui.main.FavouriteFragment;
 import com.example.mockprojectv3.ui.main.HomeFragment;
 import com.example.mockprojectv3.ui.main.NotificationFragment;
 import com.example.mockprojectv3.ui.main.ProfileFragment;
+import com.example.mockprojectv3.viewmodel.HomeViewModel;
+import com.example.mockprojectv3.viewmodel.UserViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
     BottomNavigationView bottomNavigationView;
-    private ProfileFragment profileFragment = ProfileFragment.getInstance();
     public static final int MY_REQUEST_CODE = 10;
+    private ProfileFragment profileFragment = ProfileFragment.getInstance();
     HomeFragment homeFragment = HomeFragment.getInstance();
     FavouriteFragment favouriteFragment = new FavouriteFragment();
     NotificationFragment notificationFragment = new NotificationFragment();
+
+    public HomeViewModel homeViewModel;
+    public UserViewModel userViewModel;
     private ActivityResultLauncher<Intent> mActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
         @Override
         public void onActivityResult(ActivityResult result) {
@@ -59,6 +66,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        homeViewModel = new ViewModelProvider(this).get(HomeViewModel .class);
+        userViewModel = new ViewModelProvider(this).get(UserViewModel .class);
+
         getSupportActionBar().hide();
 
         bottomNavigationView = findViewById(R.id.bottomNav);
@@ -122,11 +133,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 //        return true;
 //    }
 
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
     switch (item.getItemId()){
         case R.id.home:
+//            Navigation.findNavController(getCurrentFocus()).navigate(R.id.home);
             getSupportFragmentManager().beginTransaction().replace(R.id.containerFragment, homeFragment).commit();
             return true;
 

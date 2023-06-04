@@ -2,18 +2,20 @@ package com.example.mockprojectv3.repositories;
 
 import androidx.lifecycle.LiveData;
 import com.example.mockprojectv3.model.MovieModel;
+import com.example.mockprojectv3.viewmodel.SingleLiveEvent;
+
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Observable;
 
 public interface MovieRepository {
-    LiveData<Resource<List<MovieModel>>> getSearchMovies();
+    SingleLiveEvent<Resource<List<MovieModel>>> getSearchMovies();
 
-    LiveData<Resource<List<MovieModel>>> getPopularMovies();
+    SingleLiveEvent<Resource<List<MovieModel>>> getPopularMovies();
 
-    LiveData<Resource<List<MovieModel>>> getTrendingMovies();
+    SingleLiveEvent<Resource<List<MovieModel>>> getTrendingMovies();
 
-    LiveData<Resource<MovieModel>> getMovieByID();
+    SingleLiveEvent<Resource<MovieModel>> getMovieByID();
 
     void getMovieByID(int movieID);
 

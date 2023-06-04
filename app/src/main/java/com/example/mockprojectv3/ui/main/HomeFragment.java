@@ -26,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.mockprojectv3.MainActivity;
 import com.example.mockprojectv3.R;
 import com.example.mockprojectv3.adapter.CategoryAdapter;
 import com.example.mockprojectv3.adapter.MoviesAdapter;
@@ -47,14 +48,14 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
     private static HomeFragment instance;
-
     public static HomeFragment getInstance() {
         if (instance == null) {
             instance = new HomeFragment();
         }
         return instance;
     }
-
+    private Handler searchHandler = new Handler();
+    private Runnable searchRunnable;
     ProgressDialog progressDialog;
     private FragmentManager fragmentManager;
     private RecyclerView rcCategories;
@@ -73,11 +74,10 @@ public class HomeFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.e("Debug", "CREATE");
-        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
-
+//        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        homeViewModel = ((MainActivity) requireActivity()).homeViewModel;
+        userViewModel = ((MainActivity) requireActivity()).userViewModel;
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -97,14 +97,16 @@ public class HomeFragment extends Fragment {
 
         // Popular:
         ConfigurePopularRecyclerView();
+
         // Trending
         ConfigureTrendingRecyclerView();
+
+        //Search Movie
         ConfigureSearchRecyclerView();
-        loadMovies(1);
+
         ObservePopularChange();
         ObserveTrendingChange();
         ObserverSearchChange();
-
 
         // Set up Search view
         SetupSearchView();
@@ -199,18 +201,28 @@ public class HomeFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                // Xử lý khi người dùng thay đổi nội dung tìm kiếm
-                if (newText.isEmpty()) {
-                    // Ẩn ViewGroup nếu không có kết quả tìm kiếm
-                    rcSearch.setVisibility(View.GONE);
-                } else {
-                    // Hiển thị ViewGroup nếu có kết quả tìm kiếm
-                    rcSearch.setVisibility(View.VISIBLE);
-                    searchMovies(newText, 1);
+                searchHandler.removeCallbacks(searchRunnable); // Hủy bỏ việc chạy trước đó (nếu có)
 
-                    // Hiển thị kết quả tìm kiếm trong ViewGroup
-                    // Có thể sử dụng ListView, RecyclerView hoặc các thành phần khác để hiển thị kết quả
-                }
+                searchRunnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        // Xử lý khi người dùng thay đổi nội dung tìm kiếm
+                        if (newText.isEmpty()) {
+                            // Ẩn ViewGroup nếu không có kết quả tìm kiếm
+                            rcSearch.setVisibility(View.GONE);
+                        } else {
+                            // Hiển thị ViewGroup nếu có kết quả tìm kiếm
+                            rcSearch.setVisibility(View.VISIBLE);
+                            searchMovies(newText, 1);
+
+                            // Hiển thị kết quả tìm kiếm trong ViewGroup
+                            // Có thể sử dụng ListView, RecyclerView hoặc các thành phần khác để hiển thị kết quả
+                        }
+                    }
+                };
+
+                // Đặt delay 2 giây trước khi thực hiện tìm kiếm
+                searchHandler.postDelayed(searchRunnable, 1000);
                 return true;
             }
         });
@@ -223,6 +235,9 @@ public class HomeFragment extends Fragment {
                 if (resource != null && resource.getStatus() == Resource.Status.SUCCESS) {
                     List<MovieModel> movieModels = resource.getData();
                     if (movieModels != null) {
+                        if (homeViewModel.getPageNumber() == 1) {
+                            Toast.makeText(getContext(), "Loading Success", Toast.LENGTH_SHORT).show();
+                        }
                         searchAdapter.setData(movieModels);
                     }
                     progressDialog.dismiss();
@@ -235,49 +250,42 @@ public class HomeFragment extends Fragment {
     }
 
     private void ObservePopularChange() {
-        homeViewModel.getPopularMovies().observe(getViewLifecycleOwner(), new Observer<Resource<List<MovieModel>>>() {
-            @Override
-            public void onChanged(Resource<List<MovieModel>> resource) {
-                if (resource != null && resource.getStatus() == Resource.Status.SUCCESS) {
-                    List<MovieModel> movieModels = resource.getData();
-                    if (movieModels != null) {
-                        popularAdapter.setData(movieModels);
+        homeViewModel.getPopularMovies().observe(getViewLifecycleOwner(), resource -> {
+            if (resource != null && resource.getStatus() == Resource.Status.SUCCESS) {
+                List<MovieModel> movieModels = resource.getData();
+                if (movieModels != null) {
+                    if (homeViewModel.getPageNumber() == 1) {
+                        Toast.makeText(getContext(), "Loading Pop Success", Toast.LENGTH_SHORT).show();
                     }
-                    progressDialog.dismiss();
-                } else if (resource != null && resource.getStatus() == Resource.Status.ERROR) {
-                    progressDialog.dismiss();
-                    Toast.makeText(getContext(), resource.getMessage(), Toast.LENGTH_SHORT).show();
+                    popularAdapter.setData(movieModels);
+//                    Toast.makeText(getContext(), "Loading Pop Success", Toast.LENGTH_SHORT).show();
                 }
+                progressDialog.dismiss();
+            } else if (resource != null && resource.getStatus() == Resource.Status.ERROR) {
+                progressDialog.dismiss();
+                Toast.makeText(getContext(), resource.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void ObserveTrendingChange() {
         homeViewModel.getTrendingMovies().observe(getViewLifecycleOwner(),
-                new Observer<Resource<List<MovieModel>>>() {
-                    @Override
-                    public void onChanged(Resource<List<MovieModel>> resource) {
-                        if (resource != null && resource.getStatus() == Resource.Status.SUCCESS) {
-                            List<MovieModel> movieModels = resource.getData();
-                            if (movieModels != null) {
-                                if (homeViewModel.getPageNumber() == 1) {
-                                    Toast.makeText(getContext(), "Loading Success", Toast.LENGTH_SHORT).show();
-                                }
-                                homeViewModel.setPageNumber(2);
-                                upcomingAdapter.setData(movieModels);
+                resource -> {
+                    if (resource != null && resource.getStatus() == Resource.Status.SUCCESS) {
+                        List<MovieModel> movieModels = resource.getData();
+                        if (movieModels != null) {
+                            if (homeViewModel.getPageNumber() == 1) {
+                                Toast.makeText(getContext(), "Loading Trending Success", Toast.LENGTH_SHORT).show();
                             }
-                            progressDialog.dismiss();
-                        } else if (resource != null && resource.getStatus() == Resource.Status.ERROR) {
-                            progressDialog.dismiss();
-                            Toast.makeText(getContext(), resource.getMessage(), Toast.LENGTH_SHORT).show();
+                            homeViewModel.setPageNumber(2);
+                            upcomingAdapter.setData(movieModels);
                         }
+                        progressDialog.dismiss();
+                    } else if (resource != null && resource.getStatus() == Resource.Status.ERROR) {
+                        progressDialog.dismiss();
+//                        Toast.makeText(getContext(), resource.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
-    }
-
-    private void loadMovies(int pageNumber) {
-        progressDialog.show();
-        homeViewModel.loadMovies(pageNumber);
     }
 
     private void searchMovies(String query, int pageNumber) {
@@ -286,18 +294,15 @@ public class HomeFragment extends Fragment {
     }
 
     private void ConfigureSearchRecyclerView() {
-        searchAdapter = new MoviesAdapter(new OnItemListener() {
-            @Override
-            public void onItemClick(int position) {
-                MovieModel movieModel = searchAdapter.getSelectedMovie(position);
-                Bundle bundle = new Bundle();
-                bundle.putParcelable("movie", movieModel);
+        searchAdapter = new MoviesAdapter(position -> {
+            MovieModel movieModel = searchAdapter.getSelectedMovie(position);
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("movie", movieModel);
 
-                MovieDetailFragment movieDetailsFragment = new MovieDetailFragment();
-                movieDetailsFragment.setArguments(bundle);
+            MovieDetailFragment movieDetailsFragment = new MovieDetailFragment();
+            movieDetailsFragment.setArguments(bundle);
 
-                userViewModel.navigateTo(fragmentManager, movieDetailsFragment);
-            }
+            userViewModel.navigateTo(fragmentManager, movieDetailsFragment);
         });
 
         rcSearch.setAdapter(searchAdapter);
@@ -332,7 +337,7 @@ public class HomeFragment extends Fragment {
                 MovieDetailFragment movieDetailsFragment = new MovieDetailFragment();
                 movieDetailsFragment.setArguments(bundle);
 
-                userViewModel.navigateTo(fragmentManager, movieDetailsFragment);
+                userViewModel.navigateToAndAdd(fragmentManager, movieDetailsFragment);
             }
         });
 
@@ -410,23 +415,11 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        Log.e("Debug", "RESUME");
-    }
-
-    @Override
     public void onPause() {
         super.onPause();
         Log.e("Debug", "PAUSE");
         // Stop observing LiveData when navigating to other fragments
         homeViewModel.getTrendingMovies().removeObservers(getViewLifecycleOwner());
         homeViewModel.getPopularMovies().removeObservers(getViewLifecycleOwner());
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        Log.e("Debug", "DESTROY");
     }
 }

@@ -18,29 +18,32 @@ public class HomeViewModel extends ViewModel {
     private final MovieRepository movieRepository;
     private int mPageNumber;
     private int mPageNumberSearchMovies;
-    private final LiveData<Resource<List<MovieModel>>> mSearchMovies;
-    private final LiveData<Resource<List<MovieModel>>> mTrendingMovies;
-    private final LiveData<Resource<List<MovieModel>>> mPopularMovies;
-    private final LiveData<Resource<MovieModel>> mSearchMovieByID;
+    private final SingleLiveEvent<Resource<List<MovieModel>>> mSearchMovies;
+    private final SingleLiveEvent<Resource<List<MovieModel>>> mTrendingMovies;
+    private final SingleLiveEvent<Resource<List<MovieModel>>> mPopularMovies;
+    private final SingleLiveEvent<Resource<MovieModel>> mSearchMovieByID;
 
+    public int s = 6;
 
     public HomeViewModel() {
+        Log.d("TAG", "HomeViewModel: ");
         movieRepository = MovieRepositoryImpl.getInstance();
         mSearchMovies = movieRepository.getSearchMovies();
         mTrendingMovies = movieRepository.getTrendingMovies();
         mPopularMovies = movieRepository.getPopularMovies();
         mSearchMovieByID = movieRepository.getMovieByID();
+        loadMovies(1);
     }
 
-    public LiveData<Resource<List<MovieModel>>> getSearchMovies() {
+    public SingleLiveEvent<Resource<List<MovieModel>>> getSearchMovies() {
         return mSearchMovies;
     }
 
-    public LiveData<Resource<List<MovieModel>>> getTrendingMovies() {
+    public SingleLiveEvent<Resource<List<MovieModel>>> getTrendingMovies() {
         return mTrendingMovies;
     }
 
-    public LiveData<Resource<List<MovieModel>>> getPopularMovies() {
+    public SingleLiveEvent<Resource<List<MovieModel>>> getPopularMovies() {
         return mPopularMovies;
     }
 
@@ -77,6 +80,5 @@ public class HomeViewModel extends ViewModel {
     public int getPageNumber() {
         return mPageNumber;
     }
-
 
 }

@@ -54,7 +54,6 @@ public class FavouriteFragment extends Fragment {
     FavouriteMovieAdapter favouriteMovieAdapter;
     FragmentFavouriteBinding binding;
     FireStoreViewModel fireStoreViewModel;
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

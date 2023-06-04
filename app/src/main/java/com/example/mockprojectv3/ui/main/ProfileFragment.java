@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
@@ -27,6 +28,7 @@ import com.example.mockprojectv3.R;
 import com.example.mockprojectv3.databinding.FragmentProfileBinding;
 import com.example.mockprojectv3.repositories.FirebaseRepositoryImpl;
 import com.example.mockprojectv3.repositories.Resource;
+import com.example.mockprojectv3.viewmodel.HomeViewModel;
 import com.example.mockprojectv3.viewmodel.UserViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -34,6 +36,8 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class ProfileFragment extends Fragment {
     private static ProfileFragment instance;
+
+    HomeViewModel homeViewModel;
 
     public static ProfileFragment getInstance() {
         if (instance == null) {
@@ -46,6 +50,13 @@ public class ProfileFragment extends Fragment {
     FragmentManager fragmentManager;
     private Uri mUri;
     private ProgressDialog progressDialog;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

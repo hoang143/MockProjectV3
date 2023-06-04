@@ -20,6 +20,7 @@ import com.example.mockprojectv3.R;
 import com.example.mockprojectv3.adapter.NotificationAdapter;
 import com.example.mockprojectv3.databinding.FragmentNotificationBinding;
 import com.example.mockprojectv3.databinding.FragmentProfileBinding;
+import com.example.mockprojectv3.viewmodel.HomeViewModel;
 import com.example.mockprojectv3.viewmodel.NotificationViewModel;
 import com.example.mockprojectv3.viewmodel.ProfileViewModel;
 
@@ -32,10 +33,17 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class NotificationFragment extends Fragment {
+
+    HomeViewModel homeViewModel;
     private RecyclerView rcNoti;
     private NotificationAdapter notificationAdapter;
     private FragmentNotificationBinding mFragmentNotificationBinding;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
